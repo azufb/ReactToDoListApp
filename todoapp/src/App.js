@@ -4,14 +4,25 @@ import './App.css';
 class App extends Component {
   input = '';
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      newTodo: [],
+      todos: []
+    };
+    this.doChange = this.doChange.bind(this);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
   // イベントを発生させたオブジェクトへの参照。
   doChange(event) {
     this.input = event.target.value;
   }
 
-  doSubmit(event) {
+  handleClick() {
     this.setState({
-      newTodo: [this.input]
+      newTodo: [this.input],
+      todos:this.todos.concat(this.newTodo)
     });
   }
 
@@ -21,7 +32,7 @@ class App extends Component {
       <label>
         <input type="text" onChange={this.doChange} />
       </label>
-      <button type="submit" onClick={this.doSubmit}>追加</button>
+      <button type="submit" onClick={this.props.handleClick}>追加</button>
     </div>
   }
 }
