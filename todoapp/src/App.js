@@ -2,39 +2,41 @@ import React, { Component } from 'react';
 import './App.css';
 
 class App extends Component {
-  input = '';
 
   constructor(props) {
     super(props);
-    this.state = {
-      newTodo: [],
-      // todos: []
-    };
+    let newTodo;
+    this.state= {
+      newTodo: ''
+    }
     this.doChange = this.doChange.bind(this);
-    this.handleClick = this.handleClick.bind(this);
+    this.doSubmit = this.doSubmit.bind(this);
   }
+
 
   // イベントを発生させたオブジェクトへの参照。
   doChange(event) {
     this.input = event.target.value;
   }
+  
 
-  handleClick() {
+  doSubmit(event) {
     this.setState({
-      newTodo: [this.input]
-      // todos: this.props.todos.concat(this.state.newTodo)
+      newTodo: this.input
     });
+    event.preventDefault();
   }
 
   render() {
     return <div>
-      <h1>ToDoList</h1>
-      <label>
-        <input type="text" onChange={this.doChange} />
-      </label>
-      <button type="submit" onClick={this.props.handleClick}>追加</button>
+      <form onSubmit={this.doSubmit}>
+        <label>
+          <input type="text" onChange={this.doChange} />
+        </label>
+        <input type="submit" value="追加"/>
+      </form>
       <Tasks>
-        {this.state.newTodo}
+        <div>{this.state.newTodo}</div>
       </Tasks>
     </div>
   }
@@ -42,11 +44,11 @@ class App extends Component {
 
 class Tasks extends Component {
   render() {
-    let task = [this.props.children];
-    let todos = [];
-    todos.concat(task);
-    let list = task.map((value, key) => (
-      <li key={key}>{value}</li>)
+    let content = this.props.children;
+    let task = [];
+    task.push(content);
+    let list = task.map((value) => (
+      <li>{value}</li>)
     );
     return <div>
       <ul>{list}</ul>
