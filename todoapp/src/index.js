@@ -75,8 +75,14 @@ function App() {
 
   return (
     <div className="app">
-      <span>現在のタスクは、{count}個</span>
-      <span>完了したタスクは、{compCount}個/{totals}</span>
+      <table>
+        <tr>
+          <th>残り</th>
+          <td>{count}個</td>
+          <th>完了</th>
+          <td>{compCount}個/{totals}</td>
+        </tr>
+      </table>
       <div class="todo-list">
         {todos.map((todo, index) => (
           <Todo
