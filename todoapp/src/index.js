@@ -39,36 +39,44 @@ function TodoForm({addTodo}) {
 }
 
 function App() {
-  const [todos, setTodos] = useState([
-    {
-      text: 'タスク入力！',
-      onCompleted: false
-    }
-  ]);
-  const [compCount, setComps] = useState(0);
+  const [todos, setTodos] = useState([]);
+
+  // 追加したタスクの総数求める
+  const [totals, setTotals] = useState(0);
+
+  // 現在残っているタスクの総数求める
   const [count, setCount] = useState(0);
+
+  // 完了したタスクの数求める
+  const [compCount, setComps] = useState(0);
 
   function addTodo(text) {
     const newTodos = [...todos, {text}];
     setTodos(newTodos);
-    setCount((newTodos.length)-1);
+    setCount(newTodos.length);
+    setTotals(newTodos.length);
   }
 
   function completeTodo(index) {
     const newTodos = [...todos];
     newTodos[index].onCompleted = true;
     setTodos(newTodos);
-    setComps(compCount +1);
+    setComps(compCount + 1);
+    setCount(((newTodos.length) - parseInt(compCount))-1);
   }
 
   function removeTodo(index) {
     const newTodos = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
+    setCount(newTodos.length);
+    setTotals(newTodos.length);
   }
 
   return (
     <div className="app">
+      <span>現在のタスクは、{count}個</span>
+      <span>完了したタスクは、{compCount}個/{totals}</span>
       <div class="todo-list">
         {todos.map((todo, index) => (
           <Todo
@@ -81,9 +89,7 @@ function App() {
           />
         ))}
       </div>
-      <TodoForm addTodo={addTodo} />
-      <span>現在のタスクは、{count}</span>
-      <span>完了したタスクは、{compCount}個</span>
+      <TodoForm addTodo={addTodo}/>
     </div>
   );
 }
