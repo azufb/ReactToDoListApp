@@ -4,6 +4,7 @@ import './index.css';
 import * as serviceWorker from './serviceWorker';
 
 function Todo({todo, index, completeTodo, removeTodo}) {
+
   return (
     <div className="todo" style={{textDecoration: todo.onCompleted ? 'line-through' : ""}}>
       {todo.text}
@@ -14,6 +15,7 @@ function Todo({todo, index, completeTodo, removeTodo}) {
     </div>
     );
 }
+
 function TodoForm({addTodo}) {
   const [value,setValue] = useState("");
 
@@ -25,6 +27,7 @@ function TodoForm({addTodo}) {
     addTodo(value);
 
     setValue("");
+
   }
 
   return (
@@ -38,22 +41,24 @@ function TodoForm({addTodo}) {
 function App() {
   const [todos, setTodos] = useState([
     {
-      text: "",
+      text: 'タスク入力！',
       onCompleted: false
     }
   ]);
+  const [compCount, setComps] = useState(0);
+  const [count, setCount] = useState(0);
 
   function addTodo(text) {
     const newTodos = [...todos, {text}];
     setTodos(newTodos);
+    setCount((newTodos.length)-1);
   }
 
   function completeTodo(index) {
     const newTodos = [...todos];
-
     newTodos[index].onCompleted = true;
-
     setTodos(newTodos);
+    setComps(compCount +1);
   }
 
   function removeTodo(index) {
@@ -72,10 +77,13 @@ function App() {
           todo={todo}
           completeTodo={completeTodo}
           removeTodo={removeTodo}
+          count={count}
           />
         ))}
       </div>
       <TodoForm addTodo={addTodo} />
+      <span>現在のタスクは、{count}</span>
+      <span>完了したタスクは、{compCount}個</span>
     </div>
   );
 }
