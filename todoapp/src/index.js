@@ -6,11 +6,13 @@ import * as serviceWorker from './serviceWorker';
 function Todo({todo, index, completeTodo, removeTodo}) {
 
   return (
-    <div className="todo" style={{textDecoration: todo.onCompleted ? 'line-through' : ""}}>
-      {todo.text}
-      <div>
-        <button onClick={() => completeTodo(index)}>完了</button>
-        <button onClick={() => removeTodo(index)}>削除</button>
+    <div className="main">
+      <div className="todo" style={{textDecoration: todo.onCompleted ? 'line-through' : "" }}>
+        {todo.text}
+      </div>
+      <div className="button">
+        <button className="btn1" onClick={() => completeTodo(index)}>✔</button>
+        <button className="btn2" onClick={() => removeTodo(index)}>Delete</button>
       </div>
     </div>
     );
@@ -32,7 +34,7 @@ function TodoForm({addTodo}) {
 
   return (
     <form onSubmit={handleSubmit}>
-      <input type="text" className="input" value={value}
+      <input type="text" placeholder="タスクを入力してください" className="input" value={value}
       onChange={event => setValue(event.target.value)} />
     </form>
   )
@@ -41,11 +43,11 @@ function TodoForm({addTodo}) {
 function App() {
   const [todos, setTodos] = useState([]);
 
+  // 現在残っているタスクの総数求める
+  const [remain, setRemain] = useState(0);
+
   // 追加したタスクの総数求める
   const [totals, setTotals] = useState(0);
-
-  // 現在残っているタスクの総数求める
-  const [count, setCount] = useState(0);
 
   // 完了したタスクの数求める
   const [compCount, setComps] = useState(0);
@@ -53,7 +55,7 @@ function App() {
   function addTodo(text) {
     const newTodos = [...todos, {text}];
     setTodos(newTodos);
-    setCount(newTodos.length);
+    setRemain(newTodos.length);
     setTotals(newTodos.length);
   }
 
@@ -61,26 +63,27 @@ function App() {
     const newTodos = [...todos];
     newTodos[index].onCompleted = true;
     setTodos(newTodos);
+    setRemain(((newTodos.length) - parseInt(compCount))-1);
     setComps(compCount + 1);
-    setCount(((newTodos.length) - parseInt(compCount))-1);
   }
 
   function removeTodo(index) {
     const newTodos = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
-    setCount((newTodos.length) - parseInt(compCount));
+    setRemain((newTodos.length) - parseInt(compCount));
     setTotals(newTodos.length);
   }
 
   return (
     <div className="app">
+      <h1>ToDoList App</h1>
       <table>
         <tr>
           <th>残り</th>
-          <td>{count}個</td>
+          <td>{remain}個</td>
           <th>完了</th>
-          <td>{compCount}個/{totals}</td>
+          <td>{compCount}個/{totals}個</td>
         </tr>
       </table>
       <div class="todo-list">
@@ -91,7 +94,7 @@ function App() {
           todo={todo}
           completeTodo={completeTodo}
           removeTodo={removeTodo}
-          count={count}
+          count={remain}
           />
         ))}
       </div>

@@ -7,7 +7,84 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.app {
+  min-height: 100vh;
+  position: relative;
+  padding-bottom: 120px;
+  box-sizing: border-box;
+}
+
+h1 {
+  text-align: center;
+  font-size: 60px;
+  margin-top: 0px;
+  background-color: cornflowerblue;
+}
+
+form {
+  text-align: center;
+}
+
+input {
+  margin-top: 10px;
+  font-size: 20px;
+  width: 563px;
+  height: 50px;
+}
+
+table {
+  margin-left: auto;
+  margin-right: auto;
+  width: 570px;
+  font-size: 30px;
+  text-align: center;
+  border-collapse: collapse;
+}
+
+table th, table td {
+  border: 3px solid black;
+}
+
+table th {
+  background-color: #c0c0c0;
+}
+
+.main{
+  display: flex;
+}
+.todo {
+  margin-top: 10px;
+  margin-left: auto;
+  margin-right: 0px;
+  word-wrap: break-word;
+  font-weight: bold;
+  font-size: 20px;
+  width: 570px;
+  height: 50px;
+  border: 1px solid black;
+}
+
+.button {
+  margin-top: 10px;
+  margin-left: 0px;
+  margin-right: 175px;
+}
+
+.btn1 {
+  font-size: 15px;
+  width: 70px;
+  height: 50px;
+}
+
+.btn2 {
+  position: relative;
+  width: 70px;
+  height: 50px;
+}
+
+footer {
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+  background-color: cornflowerblue;
 }
