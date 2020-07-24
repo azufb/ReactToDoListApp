@@ -69,7 +69,7 @@ function App() {
     const newTodos = [...todos];
     newTodos.splice(index, 1);
     setTodos(newTodos);
-    setCount(newTodos.length);
+    setCount((newTodos.length) - parseInt(compCount));
     setTotals(newTodos.length);
   }
 
